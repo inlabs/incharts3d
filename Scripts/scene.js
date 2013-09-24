@@ -1,0 +1,256 @@
+var Scene = 
+{
+    //  <editor-fold defaultstate="collapsed" desc="variables">
+    
+    lineColor        : [1,1,1,1],
+    wallColor        : [0.8,0.8,0.8,0.8],
+    marksBottomColor : [0.4,0.5,0.6,0],
+    marksTopColor    : [1,1,1,0],
+    
+    objects        : [], 
+    colorsPalette  : [],
+    defaultPalette : 0,
+    twoColors      : [[0,1,1,1],[1,1,0,1]],
+    diffColors     : [[0,0.5,0,1],[0,1,0,1],[1,1,0,1],[1,0.58,0.15,1],[0.7,0.3,0.2,1],[1,0,0,1],[1,0,0.5,1],[0.44,0.03,0.42,1],[0,0,1,1],[0,1,1,1]],
+    diffCol        : false,
+    twoCol         : false,
+    
+    colors4  : [[0.26,0.13,0.06,1],[0.33,0.13,0,1],[0.83,0.1,0.1,1],[0.73,0.33,0.2,1],[0.8,0.6,0.33,1],[1,0.53,0,1],[0.8,0.53,0.33,1],[0.86,0.8,0.41,1],[0.6,0.53,0.4,1],[1,0.86,0.41,1]],
+    colors10 : [[0.26,0.26,0.26,1],[0.33,0.33,0.33,1],[0.66,0.6,0.66,1],[0.8,0.8,0.8,1],[0.86,0.86,0.86,1],[1,1,1,1],[0.93,0.93,1,1],[0.73,0.73,0.8,1],[0.6,0.6,0.66,1],[0.46,0.46,0.53,1]],
+    colors9  : [[0.13,0.06,0,1],[0.2,0.13,0,1],[0.4,0.26,0.06,1],[0.66,0.46,0,1],[0.6,0.4,0.13,1],[1,0.53,0,1],[0.73,0.41,0.2,1],[1,0.93,0.06,1],[0.73,0.66,0.4,1],[0.93,0.86,0.46,1]],
+    colors8  : [[0.33,0.4,0.33,1],[0.4,0.6,0.4,1],[0.2,0.26,0.2,1],[0.2,0.33,0.26,1],[0.46,0.53,0.4,1],[0.53,0.73,0.53,1],[0.66,0.73,0.66,1],[0.86,0.93,0.86,1],[0.46,0.6,0.53,1],[0.66,0.73,0.66,1]],   
+    colors7  : [[0.44,0.4,0.32,1],[0.6,0.52,0.37,1],[0.78,0.69,0.56,1],[0.63,0.58,0.48,1],[0.80,0.74,0.66,1],[0.4,0.41,0.34,1],[0.31,0.31,0.23,1],[0.21,0.23,0.17,1]],   
+    colors6  : [[0.26,0.2,0.13,1],[0.73,0.33,0.13,1],[0.86,0.6,0.26,1],[0.73,0.86,0.8,1],[0.33,0.53,0.73,1],[0.26,0.2,0.13,1],[0.73,0.33,0.13,1],[0.86,0.6,0.26,1],[0.73,0.86,0.8,1],[0.33,0.53,0.73,1]],
+    colors5  : [[0.66,0.75,0.69,1],[0.46,0.4,0,1],[0.86,0.6,0,1],[1,1,0.4,1],[0.6,0.66,0.2,1],[0.4,0,0,1],[0.66,0.75,0.69,1],[0.46,0.4,0,1],[0.86,0.6,0,1],[1,1,0.4,1],[0.6,0.66,0.2,1],[0.4,0,0,1]],
+    colors3  : [[1,0,0,1],[1,0.66,0,1],[1,1,1,1],[1,0.8,0.53,1],[0.53,0.33,0.13,1],[1,0,0,1],[1,0.66,0,1],[1,1,1,1],[1,0.8,0.53,1],[0.53,0.33,0.13,1]],   
+    colors2  : [[0.26,0.2,0.2,1],[0.86,0,0,1],[1,0.46,0,1],[1,1,0.93,1],[0.2,0.53,0.73,1],[0.26,0.2,0.2,1],[0.86,0,0,1],[1,0.46,0,1],[1,1,0.93,1],[0.2,0.53,0.73,1]],   
+    colors   : [[0.3,0.3,1,1],[1,1,1,1]],        
+    colors1  : [[0.27,0.55,0.78,1],[0.84,0.33,0.12,1],[0.46,0.59,0.06,1],[0.87,0.89,0.22,1],[0.37,0.74,0.25,1],[0.04,0.26,0.51,1],[0.96,0.51,0.16,1],[0.92,0.93,0,1]],
+    colors11 : [[0.53,0.2,0,1],[1,0.4,0,2],[0.93,0.73,0.4,1],[1,0.93,0.93,1],[0.4,0.6,0.06,1],[0.53,0.2,0,1],[1,0.4,0,2],[0.93,0.73,0.4,1],[1,0.93,0.93,1],[0.4,0.6,0.06,1]],  
+//  </editor-fold>
+       
+    //  <editor-fold defaultstate="collapsed" desc="add colors">
+    addColors : function()
+    {
+      this.colorsPalette.push(this.colors);
+      this.colorsPalette.push(this.colors1);
+      this.colorsPalette.push(this.colors2);
+      this.colorsPalette.push(this.colors3);
+      this.colorsPalette.push(this.colors4);
+      this.colorsPalette.push(this.colors5);
+      this.colorsPalette.push(this.colors6);
+      this.colorsPalette.push(this.colors7);
+      this.colorsPalette.push(this.colors8);
+      this.colorsPalette.push(this.colors9);
+      this.colorsPalette.push(this.colors10);
+      this.colorsPalette.push(this.colors11);
+    },
+    //  </editor-fold>
+    
+    //  <editor-fold defaultstate="collapsed" desc="get object">
+    getObject : function(alias)
+    {
+        for(var i=0; i<Scene.objects.length; i++)
+            if (alias === Scene.objects[i].alias) 
+                return Scene.objects[i];
+
+        return null;
+    },
+    //  </editor-fold>
+
+    //  <editor-fold defaultstate="collapsed" desc="load object">
+    loadObject : function(filename, alias)
+    {
+        var request = new XMLHttpRequest();
+        request.open("GET", filename);
+    
+        request.onreadystatechange = function() 
+        {
+            if (request.readyState == 4) 
+            {
+                if(request.status == 404)
+                    console.info(filename + ' does not exist');
+                else 
+                {
+                    var o    = JSON.parse(request.responseText);
+                    o.alias  = (alias == null) ? 'none' : alias;
+                    o.remote = true;
+                    Scene.addObject(o);
+                }
+            }
+        };
+        request.send();
+    },
+    //  </editor-fold>
+
+    //  <editor-fold defaultstate="collapsed" desc="set shape color">
+    setShapeColor : function(numberPalette,object)
+    {
+        var shapeNumber=0;
+        var t = object.alias;
+        if(t.substring(1,5)=='cube' || t.substring(1,9)=='cylinder' || t.substring(2,6)=='cube' || t.substring(2,10)=='cylinder' ||
+            t.substring(1,5)=='cone' ||  t.substring(2,6)=='cone')
+        {
+            var seria_number;
+            if(t.substring(1,5)=='cube' || t.substring(1,9)=='cylinder' || t.substring(1,5)=='cone')
+                seria_number = t.substring(0,1);
+            else if(t.substring(2,6)=='cube' || t.substring(2,10)=='cylinder' ||t.substring(2,6)=='cone')
+                seria_number = t.substring(0,2);
+            
+            if(t.substring(1,5)=='cube' || t.substring(1,5)=='cone')
+                shapeNumber=t.substring(5,6);
+            else if(t.substring(2,6)=='cube' || t.substring(2,6)=='cone')
+                shapeNumber=t.substring(6,7);
+            else if(t.substring(1,9)=='cylinder')
+                shapeNumber=t.substring(9,10);
+             else if(t.substring(2,10)=='cylinder')
+                shapeNumber=t.substring(10,11);
+            
+            object.pcolor = [Math.random(), Math.random(), Math.random(), 1.0];
+            series[seria_number].pickerColor.push([ Math.round(object.pcolor[0]*255), Math.round(object.pcolor[1]*255), Math.round(object.pcolor[2]*255), 1.0]);
+            
+            if(!app.drawTex)
+            {
+                for(var i=0; i< series.length; i++)
+                    if(seria_number==i)
+                    {
+                        if(this.twoCol)
+                        {
+                            if(shapeNumber%2==0)
+                                object.diffuse=this.twoColors[0];
+                            else
+                                object.diffuse=this.twoColors[1];
+                        }
+                        else if(this.diffCol)
+                            object.diffuse = this.diffColors[t.substring(9,10)];
+                        else
+                           object.diffuse=this.colorsPalette[numberPalette][series[seria_number].colorNumber];
+                    }
+            }
+            else
+                object.diffuse = [1,1,1,1.0];
+            
+            if(series[seria_number].sumSeries && !app.drawTex)
+                object.diffuse = [0.3,0.3,0.3,1.0]; 
+        }
+    },
+    //  </editor-fold>
+
+    //  <editor-fold defaultstate="collapsed" desc="add object">
+    addObject : function(object) 
+    {
+        //<editor-fold defaultstate="collapsed" desc="set properties">
+        if (object.wireframe === undefined) { object.wireframe = false;            }
+        if (object.diffuse   === undefined) { object.diffuse   = [1.0,1.0,1.0,1.0];}
+        if (object.ambient   === undefined) { object.ambient   = [0.2,0.2,0.2,1.0];}
+        if (object.specular  === undefined) { object.specular  = [1.0,1.0,1.0,1.0];}
+        if (object.pcolor    === undefined) { object.pcolor    = [0.0,0.0,0.0,0.0];}
+        //  </editor-fold>
+        
+        //  <editor-fold defaultstate="collapsed" desc="set color">
+        if(object.alias.substring(1,13)=='bottom_marks'|| object.alias.substring(2,14)=='bottom_marks')
+            object.diffuse = this.marksBottomColor;
+        
+        if(object.alias.substring(0,4)=='line')
+            object.diffuse = this.lineColor;
+        
+        if(object.alias.substring(0,4)=='wall')
+            object.diffuse = this.wallColor;
+        
+        this.setShapeColor(this.defaultPalette, object);
+        //  </editor-fold>
+       
+        //  <editor-fold defaultstate="collapsed" desc="set vertexBuffer">
+        var vertexBufferObject = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, vertexBufferObject);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(object.vertices), gl.STATIC_DRAW);
+        //  </editor-fold>
+       
+        //  <editor-fold defaultstate="collapsed" desc="set normalBuffer">
+        var normalBufferObject = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, normalBufferObject);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(calculateNormals(object.vertices, object.indices)), gl.STATIC_DRAW);
+        //  </editor-fold>
+        
+        //  <editor-fold defaultstate="collapsed" desc="set textureBuffer">
+        var textureBufferObject;
+        if (object.texture_coords)
+        {
+            textureBufferObject = gl.createBuffer();
+            gl.bindBuffer(gl.ARRAY_BUFFER, textureBufferObject);
+            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(object.texture_coords), gl.STATIC_DRAW);
+            object.tbo = textureBufferObject;
+        }
+        //  </editor-fold>
+
+        //  <editor-fold defaultstate="collapsed" desc="set indicesBuffer">
+        if(object.indices)
+        {
+            var indexBufferObject = gl.createBuffer();
+            gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBufferObject);
+            gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(object.indices), gl.STATIC_DRAW);
+        }
+        //  </editor-fold>
+   
+        //  <editor-fold defaultstate="collapsed" desc="set data">
+        object.vbo = vertexBufferObject;
+        object.ibo = indexBufferObject;
+        object.nbo = normalBufferObject;
+
+        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, null);
+        gl.bindBuffer(gl.ARRAY_BUFFER, null);
+    
+        Scene.objects.push(object);
+        //  </editor-fold>
+    },
+    //  </editor-fold>
+
+    //  <editor-fold defaultstate="collapsed" desc="remove object">
+    removeObject: function(objectName)
+    {
+        var o = this.getObject(objectName);
+        var idx = this.objects.indexOf(o);
+        this.objects.splice(idx, 1);
+    },
+    //  </editor-fold>
+    
+    //  <editor-fold defaultstate="collapsed" desc="remove all">
+    removeAll: function()
+    {
+        for(var i = this.objects.length-1; i>=0; i--)
+            this.removeObject(this.objects[i].alias);       
+    },
+            //  </editor-fold>
+    
+    //  <editor-fold defaultstate="collapsed" desc="add shapes">
+    addShapes: function(number, min, max)
+    {
+        if(series[number].shape === 0)
+            for(var i=min; i<max; i++)
+                this.loadObject('models/cylinder_shape.json', number+'cylinder'+i);  
+        else if(series[number].shape === 1)
+            for(var i=min; i<max; i++)
+                this.loadObject('models/cube.json', number+'cube'+i);
+        else if(series[number].shape === 2)
+            for(var i=min; i<max; i++)
+                this.loadObject('models/cone.json', number+'cone'+i);
+    },
+    //  </editor-fold>
+    
+    //<editor-fold defaultstate="collapsed" desc="remove shapes">      
+    removeShapes: function(number)
+    {
+        var n=series[number].data.length-1;
+        for(var i = this.objects.length-1; i>=0; i--)
+        {
+             if(this.objects[i].alias === number+"cube"+n || this.objects[i].alias === number+"cylinder"+n || this.objects[i].alias === number+"cone"+n)
+             {
+                this.removeObject(this.objects[i].alias);
+                n--;
+             }
+             else if (this.objects[i].alias === "undefined")
+                this.objects.splice(i, 1);
+        }
+    }
+    // </editor-fold>
+};
