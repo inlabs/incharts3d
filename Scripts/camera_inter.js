@@ -28,8 +28,6 @@ CameraInter.prototype.get2DCoords = function(ev)
 {
     var x, y, top = 0, left = 0, obj = this.canvas;
 
-//alert(obj.offsetTop)
-
     this.picker.offX =obj.offsetLeft;
     this.picker.offY =obj.offsetTop;
     
@@ -43,23 +41,11 @@ CameraInter.prototype.get2DCoords = function(ev)
     left += window.pageXOffset;
     top  -= window.pageYOffset;
 
- 
- 
     x = ev.clientX - left;
     y = c_height - (ev.clientY - top);
-    
-    console.log(x + ", " + y)
-    
+
     return {x:x, y:y};
 };
-
-function getMousePos(canvas, evt) {
-    var rect = canvas.getBoundingClientRect();
-    return {
-        x: evt.clientX - rect.left,
-        y: evt.clientY - rect.top
-    };
-}
 //  </editor-fold>
 
 //  <editor-fold defaultstate="collapsed" desc="onMouseUp">
@@ -98,6 +84,7 @@ CameraInter.prototype.onMouseMove = function(ev)
         if (!this.picking) {
             this.picker.showLegend =true;
             this.picker.stop();
+            hide('legend');
         }
     }
         
@@ -163,14 +150,17 @@ CameraInter.prototype.mousewheel = function(event)
     var pos;
     if(this.camera.z <= 110 + ( 1 / delta ) * 0.8)
     {
-        pos = [this.camera.x, this.camera.y, this.camera.z + ( 1 / delta ) * 0.8];
+        pos = [this.camera.x, this.camera.y, this.camera.z - ( 1 / delta ) * 0.8];
         this.camera.z -= ( 1 / delta ) * 0.8;
         this.camera.setPosition(pos);
     }
     else
     {
-        pos = [this.camera.x, this.camera.y, this.camera.z-1];
-        this.camera.z += 1;
+        if(this.camera.z<108)
+        {
+            pos = [this.camera.x, this.camera.y, this.camera.z+1];
+            this.camera.z += 1;
+        }
     }
     //  </editor-fold>
 };
@@ -225,4 +215,11 @@ CameraInter.prototype.rotate = function(dx, dy)
     camera.changeAzimuth(nAzimuth);
     camera.changeElevation(nElevation);
 };
+//  </editor-fold>
+
+//  <editor-fold defaultstate="collapsed" desc="hide">
+function hide(obj) {
+    var win = document.getElementById(obj);
+    win.style.display = 'none';
+}
 //  </editor-fold>

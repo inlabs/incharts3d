@@ -140,12 +140,27 @@ Picker.prototype.getSeries = function(alias)
     //  <editor-fold defaultstate="collapsed" desc="find series">
     var series_number;
     if(alias.substring(1,5)=='cube' || alias.substring(1,9)=='cylinder' || alias.substring(1,5)=='cone' )
-        {
         series_number = alias.substring(0,1);
-       // alert(alias)
-        }
     else if(alias.substring(2,6)=='cube' || alias.substring(2,10)=='cylinder' || alias.substring(2,6)=='cone' )
         series_number = alias.substring(0,2);
+    
+    var shapeNumber=0;
+    if(alias.substring(1,5)=='cube' || alias.substring(1,5)=='cone')
+       shapeNumber=alias.substring(5,7);
+    else if(alias.substring(2,6)=='cube' || alias.substring(2,6)=='cone')
+       shapeNumber=alias.substring(6,8);
+    else if(alias.substring(1,9)=='cylinder')
+       shapeNumber=alias.substring(9,11);
+    else if(alias.substring(2,10)=='cylinder')
+       shapeNumber=alias.substring(10,12);
+            
+    for(var i=0; i<Scene.objects.length;i++)
+         if(Scene.objects[i].alias == alias)
+         {
+             series[series_number].pickerColor[shapeNumber][0] = this.color[0];
+             series[series_number].pickerColor[shapeNumber][1] = this.color[1];
+             series[series_number].pickerColor[shapeNumber][1] = this.color[2];
+         }
      //  </editor-fold>
       
     //  <editor-fold defaultstate="collapsed" desc="find shape">  
@@ -153,10 +168,10 @@ Picker.prototype.getSeries = function(alias)
     for(var i=0; i<series[series_number].data.length; i++)
     {
         if(this.color[0] == series[series_number].pickerColor[i][0]
-            || this.color[0] == series[series_number].pickerColor[i][0]
-            || this.color[0] == series[series_number].pickerColor[i][0])
+            || this.color[1] == series[series_number].pickerColor[i][1]
+            || this.color[2] == series[series_number].pickerColor[i][2])
         {
-            this.setMessage(series_number, i);
+            this.setMessage(series_number, shapeNumber, i);
             this.color[0] += 1;
         }
     }
@@ -165,11 +180,11 @@ Picker.prototype.getSeries = function(alias)
 //  </editor-fold>
 
 //  <editor-fold defaultstate="collapsed" desc="set message">
-Picker.prototype.setMessage = function(series_number,index)
+Picker.prototype.setMessage = function(series_number,index,numberX)
 {
     var height  = series[series_number].info_data[index];
-    var num_ser = "podsumowanie ";
-    var osX     = chart.legendX[index+1];
+    var num_ser = "sum ";
+    var osX     = chart.legendX[numberX+1];
     for(var j=0; j<chart.number_SeriesArray.length; j++)
         if(series[series_number].numberBaseSeries==chart.number_SeriesArray[j])
            var numZ = j;
@@ -178,11 +193,41 @@ Picker.prototype.setMessage = function(series_number,index)
     var mouseY = this.coords[1];
     if(!series[series_number].sumSeries)   
     {
-        num_ser  = "numer serii ";
+        num_ser  = "";
         num_ser += series[series_number].number_series+1;
     }
     
-    this.showLegend=false;
+    var viewportOffset = this.canvas.getBoundingClientRect();
+    var leftOffset = viewportOffset.left;
+    var topOffset = viewportOffset.top;
+    
+   this.showLegend=false;
+    if(!this.showLegend) {
+        var legendDiv = document.getElementById('legend');
+        
+        legendDiv.innerHTML = '';
+        legendDiv.innerHTML = legendDiv.innerHTML + "<span>height: "+ height +"</span><br/>";
+        legendDiv.innerHTML = legendDiv.innerHTML + "<span>series: "+ num_ser +"</span><br/>";
+        legendDiv.innerHTML = legendDiv.innerHTML + "<span>axis X: "+ osX +"</span><br/>";
+        legendDiv.innerHTML = legendDiv.innerHTML + "<span>axis Z: "+ osZ +"</span><br/>";
+        legendDiv.innerHTML = legendDiv.innerHTML + "<span>mousePosX: "+ mouseX +"</span><br/>";
+        legendDiv.innerHTML = legendDiv.innerHTML + "<span>mousePosY: "+ mouseY +"</span><br/>";
+        
+        css = {
+            "text-align": "left", 
+            "margin": "0 auto",
+            "font-family": "Open Sans", 
+            "font-size": "x-small", 
+            "color": "#000",
+            "left": mouseX + this.offX + leftOffset + "px", 
+            "bottom": mouseY - this.offY + topOffset/2 + "px",
+            "display": "block"
+        };
+        
+        for(var i in css){
+            legendDiv.style[i] = css[i];
+        }
+    }
 };
 //  </editor-fold>
 

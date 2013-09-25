@@ -49,16 +49,6 @@ Program.prototype.getShader = function(gl, id)
         shader = gl.createShader(gl.VERTEX_SHADER);
     else 
         return null;
-
-    gl.shaderSource(shader, str);
-    gl.compileShader(shader);
-
-    if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) 
-    {
-        alert(gl.getShaderInfoLog(shader));
-        return null;
-    }
-    return shader;
 };
 //  </editor-fold>
 

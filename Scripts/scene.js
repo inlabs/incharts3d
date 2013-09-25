@@ -2,48 +2,71 @@ var Scene =
 {
     //  <editor-fold defaultstate="collapsed" desc="variables">
     
+    /**
+     * @member lineColor
+     * @type Array
+     * @desc Change colour line on the wall.
+     */
     lineColor        : [1,1,1,1],
+    /**
+     * @member wallColor
+     * @type Array
+     * @desc Change walls colour.
+     */
     wallColor        : [0.8,0.8,0.8,0.8],
+    /**
+     * @member marksBottomColor
+     * @type Array
+     * @desc Change labels footer colour.
+     */
     marksBottomColor : [0.4,0.5,0.6,0],
+    /**
+     * @member marksTopColor
+     * @type Array
+     * @desc Change labels header colour.
+     */
     marksTopColor    : [1,1,1,0],
+    /**
+     * @member twoColors
+     * @type {Array}
+     * @desc Define two colours for series. Change twoCol on true.
+     */
+    twoColors      : [[0,1,1,1],[1,1,0,1]],
+    /**
+     * @member diffColors
+     * @type {Array}
+     * @desc Define mix of colours for series. Change diffCol on true.
+     */
+    diffColors     : [[0,0.5,0,1],[0,1,0,1],[1,1,0,1],[1,0.58,0.15,1],[0.7,0.3,0.2,1],[1,0,0,1],[1,0,0.5,1],[0.44,0.03,0.42,1],[0,0,1,1],[0,1,1,1]],
+    /**
+     * @member diffCol
+     * @type {Boolean}
+     * @desc Switch on/off mix of colours for series.
+     */
+    diffCol        : false,
+    /**
+     * @member twoCol
+     * @type {Boolean}
+     * @desc Switch on/off two colours for series.
+     */
+    twoCol         : false,
+    /**
+     * @member colors
+     * @type {Array}
+     * @desc Set default colour for series.
+     */
+    colors   : [[0.3,0.3,1,1],[1,1,1,1]],
     
     objects        : [], 
     colorsPalette  : [],
     defaultPalette : 0,
-    twoColors      : [[0,1,1,1],[1,1,0,1]],
-    diffColors     : [[0,0.5,0,1],[0,1,0,1],[1,1,0,1],[1,0.58,0.15,1],[0.7,0.3,0.2,1],[1,0,0,1],[1,0,0.5,1],[0.44,0.03,0.42,1],[0,0,1,1],[0,1,1,1]],
-    diffCol        : false,
-    twoCol         : false,
-    
-    colors4  : [[0.26,0.13,0.06,1],[0.33,0.13,0,1],[0.83,0.1,0.1,1],[0.73,0.33,0.2,1],[0.8,0.6,0.33,1],[1,0.53,0,1],[0.8,0.53,0.33,1],[0.86,0.8,0.41,1],[0.6,0.53,0.4,1],[1,0.86,0.41,1]],
-    colors10 : [[0.26,0.26,0.26,1],[0.33,0.33,0.33,1],[0.66,0.6,0.66,1],[0.8,0.8,0.8,1],[0.86,0.86,0.86,1],[1,1,1,1],[0.93,0.93,1,1],[0.73,0.73,0.8,1],[0.6,0.6,0.66,1],[0.46,0.46,0.53,1]],
-    colors9  : [[0.13,0.06,0,1],[0.2,0.13,0,1],[0.4,0.26,0.06,1],[0.66,0.46,0,1],[0.6,0.4,0.13,1],[1,0.53,0,1],[0.73,0.41,0.2,1],[1,0.93,0.06,1],[0.73,0.66,0.4,1],[0.93,0.86,0.46,1]],
-    colors8  : [[0.33,0.4,0.33,1],[0.4,0.6,0.4,1],[0.2,0.26,0.2,1],[0.2,0.33,0.26,1],[0.46,0.53,0.4,1],[0.53,0.73,0.53,1],[0.66,0.73,0.66,1],[0.86,0.93,0.86,1],[0.46,0.6,0.53,1],[0.66,0.73,0.66,1]],   
-    colors7  : [[0.44,0.4,0.32,1],[0.6,0.52,0.37,1],[0.78,0.69,0.56,1],[0.63,0.58,0.48,1],[0.80,0.74,0.66,1],[0.4,0.41,0.34,1],[0.31,0.31,0.23,1],[0.21,0.23,0.17,1]],   
-    colors6  : [[0.26,0.2,0.13,1],[0.73,0.33,0.13,1],[0.86,0.6,0.26,1],[0.73,0.86,0.8,1],[0.33,0.53,0.73,1],[0.26,0.2,0.13,1],[0.73,0.33,0.13,1],[0.86,0.6,0.26,1],[0.73,0.86,0.8,1],[0.33,0.53,0.73,1]],
-    colors5  : [[0.66,0.75,0.69,1],[0.46,0.4,0,1],[0.86,0.6,0,1],[1,1,0.4,1],[0.6,0.66,0.2,1],[0.4,0,0,1],[0.66,0.75,0.69,1],[0.46,0.4,0,1],[0.86,0.6,0,1],[1,1,0.4,1],[0.6,0.66,0.2,1],[0.4,0,0,1]],
-    colors3  : [[1,0,0,1],[1,0.66,0,1],[1,1,1,1],[1,0.8,0.53,1],[0.53,0.33,0.13,1],[1,0,0,1],[1,0.66,0,1],[1,1,1,1],[1,0.8,0.53,1],[0.53,0.33,0.13,1]],   
-    colors2  : [[0.26,0.2,0.2,1],[0.86,0,0,1],[1,0.46,0,1],[1,1,0.93,1],[0.2,0.53,0.73,1],[0.26,0.2,0.2,1],[0.86,0,0,1],[1,0.46,0,1],[1,1,0.93,1],[0.2,0.53,0.73,1]],   
-    colors   : [[0.3,0.3,1,1],[1,1,1,1]],        
-    colors1  : [[0.27,0.55,0.78,1],[0.84,0.33,0.12,1],[0.46,0.59,0.06,1],[0.87,0.89,0.22,1],[0.37,0.74,0.25,1],[0.04,0.26,0.51,1],[0.96,0.51,0.16,1],[0.92,0.93,0,1]],
-    colors11 : [[0.53,0.2,0,1],[1,0.4,0,2],[0.93,0.73,0.4,1],[1,0.93,0.93,1],[0.4,0.6,0.06,1],[0.53,0.2,0,1],[1,0.4,0,2],[0.93,0.73,0.4,1],[1,0.93,0.93,1],[0.4,0.6,0.06,1]],  
+   
 //  </editor-fold>
        
     //  <editor-fold defaultstate="collapsed" desc="add colors">
     addColors : function()
     {
       this.colorsPalette.push(this.colors);
-      this.colorsPalette.push(this.colors1);
-      this.colorsPalette.push(this.colors2);
-      this.colorsPalette.push(this.colors3);
-      this.colorsPalette.push(this.colors4);
-      this.colorsPalette.push(this.colors5);
-      this.colorsPalette.push(this.colors6);
-      this.colorsPalette.push(this.colors7);
-      this.colorsPalette.push(this.colors8);
-      this.colorsPalette.push(this.colors9);
-      this.colorsPalette.push(this.colors10);
-      this.colorsPalette.push(this.colors11);
     },
     //  </editor-fold>
     
@@ -169,7 +192,11 @@ var Scene =
         //  <editor-fold defaultstate="collapsed" desc="set normalBuffer">
         var normalBufferObject = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, normalBufferObject);
-        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(calculateNormals(object.vertices, object.indices)), gl.STATIC_DRAW);
+        
+        if(object.normals)
+            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(object.normals), gl.STATIC_DRAW);
+        else
+            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(calculateNormals(object.vertices, object.indices)), gl.STATIC_DRAW);
         //  </editor-fold>
         
         //  <editor-fold defaultstate="collapsed" desc="set textureBuffer">
@@ -218,7 +245,8 @@ var Scene =
     removeAll: function()
     {
         for(var i = this.objects.length-1; i>=0; i--)
-            this.removeObject(this.objects[i].alias);       
+            if(this.objects[i].alias !== 'floor')
+                this.removeObject(this.objects[i].alias);       
     },
             //  </editor-fold>
     

@@ -1,9 +1,29 @@
 function Series()
 {  
     // <editor-fold defaultstate="collapsed" desc="variables">
+    /**
+     * @member speed
+     * @type Number
+     * @desc Change animation speed.
+     */
     this.speed     = 15;
+    /**
+     * @member shape
+     * @type Number
+     * @desc Change model shape (0 - cylinder, 1 - cube, 2 - cone).
+     */
     this.shape     = 0;
+    /**
+     * @member showMarks
+     * @type Boolean
+     * @desc Switch on/off labels.
+     */
     this.showMarks = false;
+    /**
+     * @member anim
+     * @type Number
+     * @desc Change type of animation (0 - opacity, 1 - slideUp).
+     */
     this.anim      = 1;
     this.finishAnim = false;
     this.sumAnim   = false;
@@ -108,7 +128,11 @@ Series.prototype.setNewData = function()
     
     for(var i=0; i<this.data.length; i++)
         if(this.data[i] != -this.max)
+        {
             this.data[i] /= x;
+            if(this.data[i]<0.5)
+                this.data[i]=0.2;
+        }
 };
 
 Series.prototype.initH = function()

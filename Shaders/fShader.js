@@ -45,7 +45,7 @@ void main(void)\
         vec3 E = normalize(vEyeVec);\
         vec3 R = reflect(L, N);\
         float specular = pow( max(dot(R, E), 0.5),uShininess);\
-        vec4 Is = specular*0.3*uMaterialSpecular * uLightSpecular;\
+        vec4 Is = specular*uMaterialSpecular * uLightSpecular;\
         vec4 finalColor = Ia + Id + Is;\
         finalColor.a = uAlpha;\
 \

@@ -1,15 +1,49 @@
 function Application()
 {
-    //  <editor-fold defaultstate="collapsed" desc="variables">
+    //  <editor-fold defaultstate="collapsed" desc="variables">    
+    /** 
+     * @member ShowWall
+     * @type {Boolean}
+     * @desc Switch on/off all walls.
+     */
     this.ShowWall        = true;
+    /** 
+     * @member ShowWallBack
+     * @type {Boolean}
+     * @desc Switch on/off left and back walls.
+     */
     this.ShowWallBack    = true;
+    /** 
+     * @member ShowLine
+     * @type {Boolean}
+     * @desc Switch on/off lines on walls.
+     */
     this.ShowLine        = true;
+    /** 
+     * @member ShowTextY 
+     * @type {Boolean}
+     * @desc Switch on/off text on y-axis.
+     */
     this.ShowTextY       = true;
+    /** 
+     * @member ShowTextXZ 
+     * @type {Boolean}
+     * @desc Switch on/off text on x-axis and z-axis.
+     */
     this.ShowTextXZ      = false;
-    this.backgroundColor = [1,1,1,1.0];
-    
-    this.floorStep = 0;
+    /** 
+     * @member backgroundColor
+     * @type {Array}
+     * @desc Change background color of canvas.
+     */
+    this.backgroundColor = [0.9019607843137255, 0.9019607843137255, 0.9019607843137255, 1.0];
+    /** 
+     * @member drawTex
+     * @type {Boolean}
+     * @desc Switch on/off texturing.
+     */
     this.drawTex = false;
+    this.floorStep = 0;
     //  </editor-fold>
 }
 
@@ -31,10 +65,17 @@ Application.prototype.findMaxSerie = function()
 //  <editor-fold defaultstate="collapsed" desc="loadScene">
 Application.prototype.loadScene = function()
 {
+  //  Scene.loadObject('models/floor.json', 'floor');  
+    this.load();
+};
+//  </editor-fold>
+
+//  <editor-fold defaultstate="collapsed" desc="load">
+Application.prototype.load = function()
+{
     Scene.loadObject('models/wall_back.json', 'wall_bottom');
     Scene.loadObject('models/wall_back.json', 'wall_back');
     Scene.loadObject('models/wall_back.json', 'wall_left');
-    Scene.loadObject('models/floor.json', 'floor');
     
     this.findMaxSerie();
 
@@ -78,7 +119,7 @@ Application.prototype.loadTexts = function()
 //  <editor-fold defaultstate="collapsed" desc="configure">
 Application.prototype.configure = function()
 {
-    gl.clearColor(1, 1, 1, 1.0);
+    gl.clearColor(this.backgroundColor[0], this.backgroundColor[1], this.backgroundColor[2], this.backgroundColor[3]);
     gl.clearDepth(1.0);
     gl.enable(gl.DEPTH_TEST);
     gl.enable(gl.POINT_SMOOTH);
@@ -208,7 +249,7 @@ Application.prototype.drawScene= function()
                     mat4.translate(transforms.mvMatrix, [0, 7.9, 0]);
                     this.setShape(k, j, series[k].scaleX*3, 9.9,series[k].alpha[j]);
                     mat4.rotate(transforms.mvMatrix,1.57,[1 ,0, 0]);
-                    mat4.rotate(transforms.mvMatrix,0.5,[0, 0, 1]);
+                    mat4.rotate(transforms.mvMatrix,0.9,[0, 0, 1]);
                     texture = series[k].texture;
                 }
                 else if(object.alias === k+"cone"+j)

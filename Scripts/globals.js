@@ -1,6 +1,6 @@
 var gl = null;
 var shaderProgram = null;
-var translateY    = 5;
+var translateY    = 6;
 var translateX    = 2.5;
 
 var camera     = null;

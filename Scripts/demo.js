@@ -35,33 +35,32 @@ function restart(t)
     
     chart.addSeries();
     Texts = new Array();
-    app.loadScene();
+    app.load();
     chart.addSeriesVert();        
     late  = 30;
 }
 //  </editor-fold>
 
-//  <editor-fold defaultstate="collapsed" desc="show next">
+//  <editor-fold defaultstate="collapsed" desc="start">
 function start()
 {
+    if(late>100)
+    {
     deleteAll();
     Scene.twoCol  = false;
     Scene.diffCol = false;
     app.drawTex   = false;
     
     demoNumber++;
-    if(demoNumber==16)
+    if(demoNumber==12)
         demoNumber=0; 
-    
+        
     switch(demoNumber)
     {
         case 0:
         {
             data = setDefault();
             restart();
-            for(var i=0; i< series.length;i++)
-            for(var j=0;j<series[i].min_h.length;j++)
-                series[i].min_h[j]-=4;
 
             Scene.colorsPalette[0] = [[0.3,0.3,1,1]];
             break;
@@ -89,18 +88,6 @@ function start()
         }
         case 2:
         {
-            var d = [[13],[9],[11],[7],[21],[17],[8],[5],[12]];
-            data = [];
-            data.push(d);
-            restart();
-
-             Scene.twoColors = [[0,1,1,1],[1,1,0,1]];
-             Scene.twoCol = true;
-            
-            break;
-        }
-        case 3:
-        {
             var d = [[5],[8],[10],[12],[15],[20],[18],[7],[12],[15]];
             data = [];
             data.push(d);
@@ -109,52 +96,35 @@ function start()
     
             break;
          }
-        case 4:
+        case 3:
         {
             var d = [[4],[2],[12],[5],[17],[8],[15],[4],[13],[2],[11]];
             data = [];
             data.push(d);
             restart();
             
-            chart.changeShape(1);     
+            chart.changeShape(1);          
             Scene.colorsPalette[0] = [[0.44,0.03,0.42,1]];
 
             break;
          }
-        case 5:
+        case 4:
         {
             var d = [[9],[15],[7],[17],[15],[12],[6],[13],[14],[12]];
             data = [];
             data.push(d);
             restart();
             
-            for(var i=0; i< series.length;i++)
-            for(var j=0;j<series[i].min_h.length;j++)
-            {
-                series[i].min_h[j]-=8;
-                series[i].marks_pos[j]-=8;
-            }
-            
            for(var i=0; i<series.length; i++)
                 series[i].showMarks = (series[i].showMarks) ? false : true;
             
             chart.changeShape(1);
-            chart.setMarksPos();
+
+            startChange=late;
             drawTex();                     
             break;
          }
-        case 6:
-        {
-            var d = [[5,2,1],[5,6,1],[1,3,2],[17,3,4],[3,5,1],[8,9,3],[3,5,4]]; 
-            data = [];
-            data.push(d);
-            restart();
-            
-            Scene.colorsPalette[0] = [[1,0,0,1],[1,0.66,0,1],[1,1,1,1],[1,0.8,0.53,1],[0.53,0.33,0.13,1],[1,0,0,1],
-                                      [1,0.66,0,1],[1,1,1,1],[1,0.8,0.53,1],[0.53,0.33,0.13,1]];        
-            break;
-         }
-        case 7:
+        case 5:
         {
             var d = [[3,5,1,3,1,1],[8,9,3,1,1,1],[3,1,4,5,7,2],[5,7,7,1,5,2],
                      [3,5,4,1,1,3],[8,9,7,3,1,3],[3,5,4,1,1,3],[1,5,1,8,4,4],[8,1,3,1,11,1],[2,11,4,6,1,9]];
@@ -166,7 +136,7 @@ function start()
                                       [0.26,0.2,0.2,1],[0.86,0,0,1],[1,0.46,0,1],[1,1,0.93,1],[0.2,0.53,0.73,1]];
             break;
          }
-        case 8:
+        case 6:
         {
             var d = [[15,3,1,8,3],[5,1,2,1,1],[12,6,2,2,1],[5,9,1,7,9],[1,5,2,7,4],[8,3,5,1,2],[6,11,3,4,8]]; 
             data = [];
@@ -182,25 +152,7 @@ function start()
                                      [0.53,0.2,0,1],[1,0.4,0,2],[0.93,0.73,0.4,1],[1,0.93,0.93,1],[0.4,0.6,0.06,1]];
             break;
          }
-        case 9:
-        {
-            var d = [[15,3,1,8,3,3],[5,1,2,1,1,1],[12,6,2,2,1,6],[5,9,1,7,9,3],[1,5,2,7,4,8],[8,3,5,1,2,3],[6,11,3,4,8,5]]; 
-            var dd = [[5,2,1],[5,6,1],[1,3,2],[7,3,7]]; 
-            data = [];
-            data.push(dd);
-            data.push(d);
-            restart();
-            
-            for(var i=0; i<series.length; i++)
-            {
-               series[i].initAnim0();
-               series[i].anim = 0;
-            }
-            Scene.colorsPalette[0] =[[0.66,0.75,0.69,1],[0.46,0.4,0,1],[0.86,0.6,0,1],[1,1,0.4,1],[0.6,0.66,0.2,1],
-                        [0.4,0,0,1],[0.66,0.75,0.69,1],[0.46,0.4,0,1],[0.86,0.6,0,1],[1,1,0.4,1],[0.6,0.66,0.2,1],[0.4,0,0,1]];
-            break;
-         }
-        case 10:
+        case 7:
         {
             var d = [[15,3,1,8,3,3],[5,1,2,1,1,1],[12,6,2,2,1,6],[5,9,1,7,9,3],[1,5,2,7,4,8],[8,3,5,1,2,3],[6,11,3,4,8,5]]; 
             var dd = [[5,2,1],[5,6,1],[1,3,2],[7,3,7]]; 
@@ -211,12 +163,19 @@ function start()
             data.push(d);
             restart();
             
+            for(var i=0; i< series.length;i++)
+            for(var j=0;j<series[i].min_h.length;j++)
+            {
+                series[i].min_h[j]=-35;
+                series[i].marks_pos[j]=-35;
+            }
+    
             Scene.colorsPalette[0] = [[0.26,0.2,0.13,1],[0.73,0.33,0.13,1],[0.86,0.6,0.26,1],[0.73,0.86,0.8,1],[0.33,0.53,0.73,1],
                                      [0.26,0.2,0.13,1],[0.73,0.33,0.13,1],[0.86,0.6,0.26,1],[0.73,0.86,0.8,1],[0.33,0.53,0.73,1]];
           
             break;
          }
-        case 11:
+        case 8:
         {
             var d  = [[15],[9],[12],[11],[16],[18],[9],[12],[7],[13]]; 
             data = [];
@@ -230,7 +189,7 @@ function start()
             Scene.twoColors = [[1,0,0,1],[0,1,0,1]];
             break;
          }
-        case 12:
+        case 9:
         {
             var d  = [[13],[9],[11],[10],[16],[18],[9],[12],[7],[13]]; 
             var dd = [[14],[9],[13],[17],[21],[17],[15],[5],[12],[17]];
@@ -262,7 +221,7 @@ function start()
             Scene.colorsPalette[0] =[[0.66,0.75,0.69,1],[0.46,0.4,0,1]];
             break;
          }
-        case 13:
+        case 10:
         {
             var d  = [[13],[9],[11],[10],[14],[18],[9]]; 
             var dd = [[14],[9],[13],[17],[15],[17],[15]];
@@ -277,17 +236,13 @@ function start()
             
             break;
         }
-        case 14:
+        case 11:
         {
             var d  = [[13],[9],[11],[2],[5]]; 
             data = [];
             data.push(d);
             restart();
-           
-            for(var i=0; i< series.length;i++)
-            for(var j=0;j<series[i].min_h.length;j++)
-                series[i].min_h[j]-=4;
-            
+
             chart.texture = "Images/wood2.jpg";
             for(var i=0; i<series.length;i++)
             {
@@ -301,25 +256,7 @@ function start()
 
             break;
         }
-        case 15:
-        {
-            var d  = [[1,4],[2,6],[3,1],[4,2]]; 
-            var dd  = [[4,7],[4,9],[9,3],[5,3]]; 
-            data = [];
-            data.push(d);
-            data.push(dd);
-            restart();
-
-            for(var i=0; i< series.length;i++)
-            for(var j=0;j<series[i].min_h.length;j++)
-                series[i].min_h[j]-=4;
-            
-            Scene.colorsPalette[0] = [[0.42,0.37,0.5,1],[0.95,0.78,0.26,1]];
-           
-            addCount=0;
-            startChange=late;
-            break;
-         }
+    }
     }
 }
 //  </editor-fold>

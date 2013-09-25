@@ -4,13 +4,35 @@ function Text(t)
     this.texture    = null;
     this.crateImage = null;
     this.text       = t;
+    
+    /**
+     * @member fillText
+     * @type String
+     * @desc Change text colour.
+     */
     this.fillText   = 'black';
+    /**
+     * @member fontSize
+     * @type Number
+     * @desc Change text size.
+     */
     this.fontSize   = 70;
+    /**
+     * @member font
+     * @type String
+     * @desc Change font-family for text.
+     */
     this.font       = "Arial";
+    /**
+     * @member lineWidth
+     * @type Number|Number
+     * @desc Change text weight.
+     */
+    this.lineWidth  = 4;
+    
+    this.fillAlpha  = "rgba(0, 0, 0, 0)";    
     this.scaleX     = 1;
     this.scaleY     = 1;
-    this.lineWidth  = 4;
-    this.fillAlpha  = "rgba(0, 0, 0, 0)";
     this.step       = 2;
     this.step_left  = 2;
     this.bottom     = 1;
@@ -107,12 +129,12 @@ Text.prototype.setText = function(max)
     var min  = 20;
     var text = max+"";
     text = text.length+1;
-    
-    while (text>4)
+
+    while (text>7)
     {
         this.fontSize -= min;
-        this.scaleX   += 0.2;
-        this.scaleY   += 0.1;
+      //  this.scaleX   += 0.2;
+      //  this.scaleY   += 0.3;
         text -= 1;
         min  -= 3;
     }

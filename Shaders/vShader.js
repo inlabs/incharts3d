@@ -39,7 +39,6 @@ void main(void)\
     vec4 light = vec4(uLightPosition,1.0);\
     vLightRay = vertex.xyz-light.xyz;\
     vEyeVec = -vec3(vertex.xyz);\
-\
     gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);\
     vTextureCoord = aTextureCoord;\
 }"

@@ -6,11 +6,26 @@ function Chart(d)
     this.firstStep = 1.6;
     
     this.dane     = d;
-    this.texture  = "Images/wood1.jpg";
-    this.sumArray = [];
-    
+    this.sumArray = [];    
     this.number_SeriesArray = [];
+    
+    /**
+     * @member texture
+     * @type String
+     * @desc Set path to image for columns.
+     */
+    this.texture  = "Images/wood1.jpg";
+    /**
+     * @member legendX
+     * @type {Array}
+     * @desc Set descriptions on x-axis.
+     */
     this.legendX = ["Suma","Drojma","Nowakowski","Wojnowski","Kot","Rabarbar","Kozlowski","Animator","Kozakiewicz","Maslowski","Brojge","Antonowicz","Filaj","Zaporowski","Muzyk","Waja"];
+    /**
+     * @member legendZ
+     * @type {Array}
+     * @desc Set descriptions on z-axis.
+     */
     this.legendZ = ["Administracja","Finanse","Bankowosc"];
     //  </editor-fold>
 }
@@ -20,6 +35,7 @@ Chart.prototype.initText = function()
 {
     TextsX = this.changeTextXZ(this.legendX,TextsX,23,false);
     TextsZ = this.changeTextXZ(this.legendZ,TextsZ,33,true);
+    
     if(series[0].max < -18)
         this.changeTextY(series[0].max);
 };
@@ -230,11 +246,11 @@ Chart.prototype.addSeriesVert = function()
        
     //  <editor-fold defaultstate="collapsed" desc="set min_h">
     for(var i=0; i< series.length;i++)
-        for(var j=0;j<series[i].min_h.length;j++)
-        {
-            series[i].min_h[j]-=4;
-            series[i].marks_pos[j]-=4;
-        }
+    for(var j=0;j<series[i].min_h.length;j++)
+    {
+        series[i].min_h[j]=-22;
+        series[i].marks_pos[j]=-22;
+    }
     //  </editor-fold>
     
     //  <editor-fold defaultstate="collapsed" desc="change text">
@@ -540,8 +556,6 @@ Chart.prototype.changeShape = function(number)
         {
             if(series[i].sumSeries)
                 series[i].min_h[j] = -23;
-            else
-                series[i].min_h[j] = -25;
             
             if(series[i].anim==0)
                 series[i].initAnim0();
@@ -632,6 +646,7 @@ Chart.prototype.addData = function(numberSer,val)
     {
         series[combo_serie].data2[series[combo_serie].data2.length-1][i]= (parseInt(valueArray[i]));
         series[combo_serie].data_p2[series[combo_serie].data_p2.length-1][i] = (parseInt(valueArray[i]));
+        series[combo_serie+i].info_data.push(parseInt(valueArray[i]));
     }
     //  </editor-fold>
     
