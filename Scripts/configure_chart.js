@@ -14,7 +14,7 @@ function Chart(d)
      * @type String
      * @desc Set path to image for columns.
      */
-    this.texture  = "Images/wood1.jpg";
+    this.texture  = "images/texture1.png";
     /**
      * @member legendX
      * @type {Array}
@@ -44,6 +44,23 @@ Chart.prototype.initText = function()
 //  <editor-fold defaultstate="collapsed" desc="addSeries">
 Chart.prototype.addSeries = function()
 {
+    //  <editor-fold defaultstate="collapsed" desc="set zero element">
+    for(var i=0; i<this.dane.length;i++)
+    {
+        var count = 0;
+        for(var j=0;j<this.dane[i].length;j++)
+        {
+            if(count< this.dane[i][j].length)
+                count = this.dane[i][j].length;
+        }
+        for(var j=0;j<this.dane[i].length;j++)
+        {
+            if(this.dane[i][j].length < count)
+                this.dane[i][j].push(0);
+        }
+    }
+    //  </editor-fold>
+    
     //  <editor-fold defaultstate="collapsed" desc="add data">
     for(var j=0; j < this.dane.length; j++)
     {
@@ -98,7 +115,6 @@ Chart.prototype.addSeries = function()
         series[j].initSeries();
     }
     //  </editor-fold>
-    
 };
 //  </editor-fold>
 
@@ -253,6 +269,30 @@ Chart.prototype.addSeriesVert = function()
     }
     //  </editor-fold>
     
+    //  <editor-fold defaultstate="collapsed" desc="change fonSize-tabMarks">
+    if(series[0].max<=-9999)
+    for(var i=0; i<this.number_SeriesArray.length;i++)
+        for(var j=0; j<series[0].TextsTab.length;j++)
+        {
+            series[0].TextsTab[j].fontSize -=25;
+            series[0].TextsTab[j].init();
+        }
+        //  </editor-fold>
+    
+    //  <editor-fold defaultstate="collapsed" desc="set zero element">
+   this.setZeroElement();
+   for(var k=0; k<series.length;k++)
+   for(var i =0 ; i< series[k].data2.length;i++)
+       for(var j=0; j< series[k].data2[i].length; j++)
+        {
+            if(series[k].data2[i][j]==0)
+            {
+               series[k+j].data[i]-=0.01;
+               series[k].min_h[i]+=0.2;
+            }    
+        }
+    //  </editor-fold>
+    
     //  <editor-fold defaultstate="collapsed" desc="change text">
     if(series[0].max < -18)
         this.changeTextY(series[0].max);
@@ -268,10 +308,14 @@ Chart.prototype.setZeroElement = function()
         for(var j=k+1; j<k+series[k].data2[0].length; j++)
             for(var i=0; i<series[k].data2.length; i++)
                 if(series[j].data_p[i]==series[k+series[k].data2[0].length-1].data_p[i])
+                    {
                         series[j].min_h[i] += 0.4;
+                    }
 
         k=this.number_SeriesArray[x+1];
     }
+    
+    
 };
 //  </editor-fold>
 

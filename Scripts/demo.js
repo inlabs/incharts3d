@@ -62,11 +62,20 @@ function start()
             data = setDefault();
             restart();
 
-            Scene.colorsPalette[0] = [[0.3,0.3,1,1]];
             break;
         }
         case 1:
-        {        
+        {       
+             var d = [[3],[5],[10],[16],[4],[7],[11],[9]];
+            data = [];
+            data.push(d);
+            restart();
+            
+            Scene.colorsPalette[0] = [[0.3,0.3,1,1]];
+            break;
+        }
+        case 2:
+        {
             var d = [[1],[5],[7],[13],[16],[14],[11],[6],[2]];
             data = [];
             data.push(d);
@@ -86,16 +95,6 @@ function start()
             
             break;
         }
-        case 2:
-        {
-            var d = [[5],[8],[10],[12],[15],[20],[18],[7],[12],[15]];
-            data = [];
-            data.push(d);
-            restart();
-            Scene.diffCol = true;
-    
-            break;
-         }
         case 3:
         {
             var d = [[4],[2],[12],[5],[17],[8],[15],[4],[13],[2],[11]];
@@ -243,7 +242,6 @@ function start()
             data.push(d);
             restart();
 
-            chart.texture = "Images/wood2.jpg";
             for(var i=0; i<series.length;i++)
             {
                 var T = new Texture(chart.texture);

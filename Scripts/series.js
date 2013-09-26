@@ -321,10 +321,18 @@ Series.prototype.changeScaleAll = function(t)
 //  <editor-fold defaultstate="collapsed" desc="add marks">
 Series.prototype.addTabs = function(suma)
 {
+    var tex;
+    var tmp=false;
+    var s = suma+"";
+    for(var i=0; i<s.length;i++)
+        if(s[i]==".")
+            tmp=true;
+ 
+    tex = (tmp) ? new Text(suma) : new Text(suma+".0");
+
     Scene.loadObject('models/cube_marks.json', this.number_series+'top_marks'+(this.data.length-1));
     Scene.loadObject('models/cylinder.json', this.number_series+'bottom_marks'+(this.data.length-1));
 
-    var tex = new Text(suma+".0");
     var color = "rgba("+Scene.marksTopColor[0]*255+","+Scene.marksTopColor[1]*255+","+Scene.marksTopColor[2]*255+",255)";
     tex.fillAlpha = color;
     tex.fontSize  = 80;

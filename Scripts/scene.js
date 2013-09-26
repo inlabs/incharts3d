@@ -245,10 +245,12 @@ var Scene =
     removeAll: function()
     {
         for(var i = this.objects.length-1; i>=0; i--)
-            if(this.objects[i].alias !== 'floor')
-                this.removeObject(this.objects[i].alias);       
+            if(this.objects[i].alias !== 'floor' && this.objects[i].alias !== 'wall_bottom' && this.objects[i].alias !== 'wall_back'
+                && this.objects[i].alias !== 'wall_left'  && this.objects[i].alias.substring(0,9) !== 'line_back'
+                && this.objects[i].alias.substring(0,9) !== 'line_left')
+                this.removeObject(this.objects[i].alias);    
     },
-            //  </editor-fold>
+    //  </editor-fold>
     
     //  <editor-fold defaultstate="collapsed" desc="add shapes">
     addShapes: function(number, min, max)

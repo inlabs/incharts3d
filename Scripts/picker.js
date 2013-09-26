@@ -216,8 +216,8 @@ Picker.prototype.setMessage = function(series_number,index,numberX)
         css = {
             "text-align": "left", 
             "margin": "0 auto",
-            "font-family": "Open Sans", 
-            "font-size": "x-small", 
+            "fontFamily": "Open Sans", 
+            "fontSize": "x-small", 
             "color": "#000",
             "left": mouseX + this.offX + leftOffset + "px", 
             "bottom": mouseY - this.offY + topOffset/2 + "px",

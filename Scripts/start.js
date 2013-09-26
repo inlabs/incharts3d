@@ -1,10 +1,10 @@
 //  <editor-fold defaultstate="collapsed" desc="webGLStart">
-function webGLStart() 
+function inChartsStart() 
 {
     var canvas = document.getElementById("canvas");
  
     Scene.loadObject('models/floor.json', 'floor'); 
-    
+
     var legendDiv = document.createElement('div');
 
     legendDiv.id = 'legend';
@@ -20,10 +20,10 @@ function webGLStart()
       background: '#fff',
       padding: 10 + 'px',
       zIndex: 2,
-      '-moz-border-radius': '3px',
-      '-webkit-border-radius': '3px',
-      '-khtml-border-radius': '3px',
-      'border-radius': '3px'
+      'mozBorderRadius': '3px',
+      'webkitBorderRadius': '3px',
+      'khtmlBorderRadius': '3px',
+      'borderRadius': '3px'
     }; 
     
     for(var i in css){
@@ -65,46 +65,41 @@ function setDefault()
      * @type Array
      * @desc Set default data for chart.
      */
-    var data = [[3],[5],[10],[16],[4],[7],[11],[9]];
+    var data = [[5],[8],[10],[12],[15],[21],[18],[7],[12],[15]];
     var d = [];
     d.push(data);
-    
+    Scene.diffCol = true;
     return d;
 }
 //  </editor-fold>
+
+
 
 //  <editor-fold defaultstate="collapsed" desc="run">
 function run()
 {
     late++;
     app.timeTick();
-    if(late>10)
-        {
+
     if(late>60)
     for(var i=0; i< series.length; i++)
         series[i].animate();
     
-    if(late===40)
-    {
-        app.loadTexts();
-        chart.initText();
-    }
     app.render();
     
-    if(late==1)
-    for(var k=0; k<series.length;k++)
-        {
-            var n=series[k].data.length-1;
-            for(var i = Scene.objects.length-1; i>=0; i--)
-            {
-                if(Scene.objects[i].alias.substring(0,9)=='0cylinder')
-                {
-                    Scene.removeObject(Scene.objects[i].alias);
-                    n--;
-                }
-            }
-        }
-        
+//    if(late==1)
+//    for(var k=0; k<series.length;k++)
+//        {
+//            var n=series[k].data.length-1;
+//            for(var i = Scene.objects.length-1; i>=0; i--)
+//            {
+//                if(Scene.objects[i].alias.substring(0,9)=='0cylinder')
+//                {
+//                    Scene.removeObject(Scene.objects[i].alias);
+//                    n--;
+//                }
+//            }
+//        }
     if((demoNumber==4)  && late==(startChange+40))
     {
         for(var k=0; k<series.length;k++)
@@ -154,8 +149,6 @@ function run()
             addCount = 0;
         }
     } 
-    
-    }
 }
 //  </editor-fold>
 
