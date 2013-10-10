@@ -1,3 +1,14 @@
+/******************************************************************************
+Name:    incharts3d
+Author:  Inlabs sp. z o.o. (Maciej Pleśnar, Ewelina Bendlin, Kamil Daszkowski)
+Version: 1.1 (October 2013)
+Support: http://incharts3d.com
+
+Licence:
+incharts3d is licensed under a Creative Commons Attribution-NonCommercial 3.0
+License (http://creativecommons.org/licenses/by-nc/3.0/).
+Noncommercial. You may not use this work for commercial purposes.
+******************************************************************************/
 function Program(canvas)
 {
     //  <editor-fold defaultstate="collapsed" desc="init">
@@ -26,30 +37,30 @@ Program.prototype.initGL = function(canvas)
 //  </editor-fold>
 
 //  <editor-fold defaultstate="collapsed" desc="get shader">
-Program.prototype.getShader = function(gl, id) 
-{
-    var shaderScript = document.getElementById(id);
-    if (!shaderScript)
-        return null;
-
-    var str = "";
-    var k   = shaderScript.firstChild;
-    while(k) 
-    {
-        if (k.nodeType == 3) 
-            str += k.textContent;
-    
-        k = k.nextSibling;
-    }
-
-    var shader;
-    if (shaderScript.type == "x-shader/x-fragment") 
-        shader = gl.createShader(gl.FRAGMENT_SHADER);
-    else if (shaderScript.type == "x-shader/x-vertex") 
-        shader = gl.createShader(gl.VERTEX_SHADER);
-    else 
-        return null;
-};
+//Program.prototype.getShader = function(gl, id) 
+//{
+//    var shaderScript = document.getElementById(id);
+//    if (!shaderScript)
+//        return null;
+//
+//    var str = "";
+//    var k   = shaderScript.firstChild;
+//    while(k) 
+//    {
+//        if (k.nodeType == 3) 
+//            str += k.textContent;
+//    
+//        k = k.nextSibling;
+//    }
+//
+//    var shader;
+//    if (shaderScript.type == "x-shader/x-fragment") 
+//        shader = gl.createShader(gl.FRAGMENT_SHADER);
+//    else if (shaderScript.type == "x-shader/x-vertex") 
+//        shader = gl.createShader(gl.VERTEX_SHADER);
+//    else 
+//        return null;
+//};
 //  </editor-fold>
 
 //  <editor-fold defaultstate="collapsed" desc="compile shader">
@@ -89,12 +100,10 @@ Program.prototype.initShaders = function()
 
     shaderProgram.vertexPositionAttribute = gl.getAttribLocation(shaderProgram, "aVertexPosition");
     shaderProgram.aVertexNormal           = gl.getAttribLocation(shaderProgram, "aVertexNormal");  
-    shaderProgram.aVertexColor            = gl.getAttribLocation(shaderProgram, "aVertexColor");
     shaderProgram.textureCoordAttribute   = gl.getAttribLocation(shaderProgram, "aTextureCoord");
     
     gl.enableVertexAttribArray(shaderProgram.vertexPositionAttribute);
     gl.enableVertexAttribArray(shaderProgram.aVertexNormal);
-    gl.enableVertexAttribArray(shaderProgram.aVertexColor);
     gl.enableVertexAttribArray(shaderProgram.textureCoordAttribute);
 
     shaderProgram.uPMatrix          = gl.getUniformLocation(shaderProgram, "uPMatrix");

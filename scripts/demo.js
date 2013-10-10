@@ -1,7 +1,19 @@
+/******************************************************************************
+Name:    incharts3d
+Author:  Inlabs sp. z o.o. (Maciej Pleśnar, Ewelina Bendlin, Kamil Daszkowski)
+Version: 1.1 (October 2013)
+Support: http://incharts3d.com
+
+Licence:
+incharts3d is licensed under a Creative Commons Attribution-NonCommercial 3.0
+License (http://creativecommons.org/licenses/by-nc/3.0/).
+Noncommercial. You may not use this work for commercial purposes.
+******************************************************************************/
 //  <editor-fold defaultstate="collapsed" desc="drawTex">
-function drawTex()
+function drawTexture()
 {
     app.drawTex = true;
+    
     if(app.drawTex)
     {
         var t;
@@ -91,7 +103,7 @@ function start()
             }
             
            for(var i=0; i<series.length; i++)
-                series[i].showMarks = (series[i].showMarks) ? false : true;
+                series[i].showMarks = true;
             
             break;
         }
@@ -115,12 +127,12 @@ function start()
             restart();
             
            for(var i=0; i<series.length; i++)
-                series[i].showMarks = (series[i].showMarks) ? false : true;
+                series[i].showMarks = true;
             
             chart.changeShape(1);
 
             startChange=late;
-            drawTex();                     
+            drawTexture();                     
             break;
          }
         case 5:
@@ -248,7 +260,7 @@ function start()
                     series[0].texture = T.tex;
             }
            
-            drawTex();
+            drawTexture();
             Scene.colorsPalette[0] = [[0.44,0.03,0.42,1]];
             startChange=late;
 

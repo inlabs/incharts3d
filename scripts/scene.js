@@ -1,3 +1,14 @@
+/******************************************************************************
+Name:    incharts3d
+Author:  Inlabs sp. z o.o. (Maciej Pleśnar, Ewelina Bendlin, Kamil Daszkowski)
+Version: 1.1 (October 2013)
+Support: http://incharts3d.com
+
+Licence:
+incharts3d is licensed under a Creative Commons Attribution-NonCommercial 3.0
+License (http://creativecommons.org/licenses/by-nc/3.0/).
+Noncommercial. You may not use this work for commercial purposes.
+******************************************************************************/
 var Scene = 
 {
     //  <editor-fold defaultstate="collapsed" desc="variables">
@@ -7,55 +18,55 @@ var Scene =
      * @type Array
      * @desc Change colour line on the wall.
      */
-    lineColor        : [1,1,1,1],
+    lineColor        : lineColor,
     /**
      * @member wallColor
      * @type Array
      * @desc Change walls colour.
      */
-    wallColor        : [0.8,0.8,0.8,0.8],
+    wallColor        : wallColor,
     /**
      * @member marksBottomColor
      * @type Array
      * @desc Change labels footer colour.
      */
-    marksBottomColor : [0.4,0.5,0.6,0],
+    marksBottomColor : marksBottomColor,
     /**
      * @member marksTopColor
      * @type Array
      * @desc Change labels header colour.
      */
-    marksTopColor    : [1,1,1,0],
+    marksTopColor    : marksTopColor,
     /**
      * @member twoColors
      * @type {Array}
      * @desc Define two colors for series. Change twoCol on true.
      */
-    twoColors      : [[0,1,1,1],[1,1,0,1]],
+    twoColors      : twoColors,
     /**
      * @member diffColors
      * @type {Array}
      * @desc Define mix of colors for series. Change diffCol on true.
      */
-    diffColors     : [[0,0.5,0,1],[0,1,0,1],[1,1,0,1],[1,0.58,0.15,1],[0.7,0.3,0.2,1],[1,0,0,1],[1,0,0.5,1],[0.44,0.03,0.42,1],[0,0,1,1],[0,1,1,1]],
+    diffColors     : diffColors,
     /**
      * @member diffCol
      * @type {Boolean}
      * @desc Switch on/off mix of colors for series.
      */
-    diffCol        : true,
+    diffCol        : diffCol,
     /**
      * @member twoCol
      * @type {Boolean}
      * @desc Switch on/off two colors for series.
      */
-    twoCol         : false,
+    twoCol         : twoCol,
     /**
      * @member colors
      * @type {Array}
      * @desc Set default colour for series.
      */
-    colors   : [[0.313,0.364,0.552,1],[1,1,1,1]],
+    colors   : colors,
     
     objects        : [], 
     colorsPalette  : [],
@@ -272,16 +283,18 @@ var Scene =
     removeShapes: function(number)
     {
         var n=series[number].data.length-1;
-        for(var i = this.objects.length-1; i>=0; i--)
-        {
-             if(this.objects[i].alias === number+"cube"+n || this.objects[i].alias === number+"cylinder"+n || this.objects[i].alias === number+"cone"+n)
-             {
-                this.removeObject(this.objects[i].alias);
-                n--;
-             }
-             else if (this.objects[i].alias === "undefined")
-                this.objects.splice(i, 1);
-        }
+        for(var j=n;j>=0;j--)
+            for(var i = this.objects.length-1; i>=0; i--)
+            {
+                 if(this.objects[i].alias === number+"cube"+j || this.objects[i].alias === number+"cylinder"+j || this.objects[i].alias === number+"cone"+j)
+                 {
+                    this.removeObject(this.objects[i].alias);
+                   // n--;
+                 }
+                 else if (this.objects[i].alias === "undefined")
+                    this.objects.splice(i, 1);
+
+            } 
     }
     // </editor-fold>
 };

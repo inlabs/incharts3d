@@ -1,3 +1,14 @@
+/******************************************************************************
+Name:    incharts3d
+Author:  Inlabs sp. z o.o. (Maciej Pleśnar, Ewelina Bendlin, Kamil Daszkowski)
+Version: 1.1 (October 2013)
+Support: http://incharts3d.com
+
+Licence:
+incharts3d is licensed under a Creative Commons Attribution-NonCommercial 3.0
+License (http://creativecommons.org/licenses/by-nc/3.0/).
+Noncommercial. You may not use this work for commercial purposes.
+******************************************************************************/
 function Light()
 {
     //  <editor-fold defaultstate="collapsed" desc="variables">
@@ -6,31 +17,31 @@ function Light()
      * @type Array
      * @desc Set light source position.
      */
-    this.lightPosition  = [0, -5, 50];
+    this.lightPosition  = lightPosition;
     /**
      * @member ambient
      * @type Array
      * @desc Set ambient.
      */
-    this.ambient        = [0.1,0.1,0.1,0.1];
+    this.ambient        = ambient;
     /**
      * @member diffuse
      * @type Array
      * @desc Set light colour.
      */
-    this.diffuse        = [0.8,0.8,0.8,1];
+    this.diffuse        = diffuse ;
     /**
      * @member lightSpecular
      * @type Array
      * @desc Set power of light specular.
      */
-    this.lightSpecular  = [1,1,1,1];
+    this.lightSpecular  = lightSpecular;
     /**
      * @member Shininess
      * @type Number
      * @desc Set light intensity.
      */
-    this.Shininess      = 100.0;
+    this.Shininess      = Shininess;
     
     this.initLight();
     //  </editor-fold>

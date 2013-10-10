@@ -1,3 +1,14 @@
+/******************************************************************************
+Name:    incharts3d
+Author:  Inlabs sp. z o.o. (Maciej Pleśnar, Ewelina Bendlin, Kamil Daszkowski)
+Version: 1.1 (October 2013)
+Support: http://incharts3d.com
+
+Licence:
+incharts3d is licensed under a Creative Commons Attribution-NonCommercial 3.0
+License (http://creativecommons.org/licenses/by-nc/3.0/).
+Noncommercial. You may not use this work for commercial purposes.
+******************************************************************************/
 function Picker(canvas)
 {
     //  <editor-fold defaultstate="collapsed" desc="variables">
@@ -22,8 +33,8 @@ function Picker(canvas)
 //  <editor-fold defaultstate="collapsed" desc="update">
 Picker.prototype.update = function(){
 
-    var width  = this.canvas.width;
-    var height = this.canvas.height;
+    var width  = c_width;
+    var height = c_height;
    
     gl.bindTexture(gl.TEXTURE_2D, this.texture);
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, width, height, 0, gl.RGBA, gl.UNSIGNED_BYTE, null);
@@ -36,8 +47,8 @@ Picker.prototype.update = function(){
 //  <editor-fold defaultstate="collapsed" desc="configure">
 Picker.prototype.configure = function(){
 
-    var width  = this.canvas.width;
-    var height = this.canvas.height;
+    var width  = c_width;
+    var height = c_height;
 
     this.texture = gl.createTexture();
     gl.bindTexture(gl.TEXTURE_2D, this.texture);

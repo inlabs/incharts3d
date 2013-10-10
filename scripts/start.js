@@ -1,7 +1,18 @@
+/******************************************************************************
+Name:    incharts3d
+Author:  Inlabs sp. z o.o. (Maciej Pleśnar, Ewelina Bendlin, Kamil Daszkowski)
+Version: 1.1 (October 2013)
+Support: http://incharts3d.com
+
+Licence:
+incharts3d is licensed under a Creative Commons Attribution-NonCommercial 3.0
+License (http://creativecommons.org/licenses/by-nc/3.0/).
+Noncommercial. You may not use this work for commercial purposes.
+******************************************************************************/
 //  <editor-fold defaultstate="collapsed" desc="webGLStart">
-function inChartsStart() 
+function inChartsStart(canvas) 
 {
-    var canvas = document.getElementById("canvas");
+    canvas = document.getElementById(canvas);
     Scene.loadObject('models/floor.json', 'floor'); 
     var legendDiv = document.createElement('div');
 
@@ -28,6 +39,7 @@ function inChartsStart()
         legendDiv.style[i] = css[i];
     }
     
+    
     document.getElementsByTagName('body')[0].appendChild(legendDiv);
 
     app     = new Application();
@@ -40,13 +52,192 @@ function inChartsStart()
    
     chart = new Chart(setDefault());
     
-    app.configure();
+    app.configure(canvas);
     chart.addSeries();
     app.loadScene();
     chart.addSeriesVert();
     Scene.addColors();
 
     setInterval(run, 15);
+}
+//  </editor-fold>
+
+
+(function( $ ) {
+$.fn.Incharts3dStart = function(jsonData) 
+{
+    var canvas = jQuery(this).attr("id");
+    
+    for(var obj in jsonData)
+    {
+        if(jsonData.hasOwnProperty(obj))
+        {
+            for(var prop in jsonData[obj])
+            { // prop = chart, tytul
+                if(jsonData[obj].hasOwnProperty(prop))
+                {
+                    if(prop=="chart")
+                    {
+                        for(var prop2 in jsonData[obj][prop])
+                        { // prop2 = shape, age
+                            switch(prop2)
+                            {
+                                case 'shape': shape=parseInt(jsonData[obj][prop][prop2]); break;
+                                case 'speed': speed=parseInt(jsonData[obj][prop][prop2]); break;
+                                case 'showMarks': showMarks=stringToBoolean(jsonData[obj][prop][prop2]); break;
+                                case 'animation': anim=parseInt(jsonData[obj][prop][prop2]); break;
+                                case 'texturePath': texturePath=jsonData[obj][prop][prop2]; break;
+                                case 'data': data=jsonData[obj][prop][prop2]; break;
+                            }
+                        }
+                    }
+                    else if(prop=="axisX")
+                    {
+                        for(var prop2 in jsonData[obj][prop])
+                        { 
+                            for(var i=0; i<jsonData[obj][prop][prop2].length;i++)
+                                legendX.push(jsonData[obj][prop][prop2][i])
+                        }
+                    }
+                    else if(prop=="axisZ")
+                    {
+                        for(var prop2 in jsonData[obj][prop])
+                        { 
+                            for(var i=0; i<jsonData[obj][prop][prop2].length;i++)
+                                legendZ.push(jsonData[obj][prop][prop2][i])
+                        }
+                    }
+                    else if(prop=="platform")
+                    {
+                        for(var prop2 in jsonData[obj][prop])
+                        { 
+                            if(prop2=="backgroundColor")
+                            {
+                                backgroundColor = [];
+                                for(var i=0; i<jsonData[obj][prop][prop2].length;i++)
+                                    backgroundColor.push(jsonData[obj][prop][prop2][i]);
+                            }
+                            else
+                            {
+                                var tmp= stringToBoolean(jsonData[obj][prop][prop2]);
+                                switch(prop2)
+                                {
+                                    case 'ShowWall': ShowWall=tmp; break;
+                                    case 'ShowWallBack': ShowWallBack=tmp; break;
+                                    case 'ShowLine': ShowLine=tmp; break;
+                                    case 'ShowTextY': ShowTextY=tmp; break;
+                                    case 'ShowTextXZ': ShowTextXZ=tmp; break;
+                                    case 'drawTex': drawTex=tmp; break;
+                                }
+                            }
+                        }
+                    }
+                    else if(prop=="light")
+                    {
+                        for(var prop2 in jsonData[obj][prop])
+                        { 
+                            switch(prop2)
+                            {
+                                case 'lightPosition' : 
+                                    lightPosition = [];
+                                    for(var i=0; i<jsonData[obj][prop][prop2].length;i++)
+                                        lightPosition.push(jsonData[obj][prop][prop2][i]); break;
+                                case 'ambient' : 
+                                    ambient = [];
+                                    for(var i=0; i<jsonData[obj][prop][prop2].length;i++)
+                                        ambient.push(jsonData[obj][prop][prop2][i]); break;
+                                case 'diffuse' : 
+                                    diffuse = [];
+                                    for(var i=0; i<jsonData[obj][prop][prop2].length;i++)
+                                        diffuse.push(jsonData[obj][prop][prop2][i]); break;
+                                case 'lightSpecular' : 
+                                    lightSpecular = [];
+                                    for(var i=0; i<jsonData[obj][prop][prop2].length;i++)
+                                        lightSpecular.push(jsonData[obj][prop][prop2][i]); break;
+                                case 'Shininess': Shininess=parseInt(jsonData[obj][prop][prop2]); break;
+                            }
+                            
+                        }
+                    }
+                    else if(prop=="text")
+                    {
+                        for(var prop2 in jsonData[obj][prop])
+                        { 
+                            switch(prop2)
+                            {
+                                case 'fillText': fillText =jsonData[obj][prop][prop2]+""; break;
+                                case 'fontSize': fontSize=parseInt(jsonData[obj][prop][prop2]); break;
+                                case 'font': font=jsonData[obj][prop][prop2]+""; break;
+                                case 'lineWidth': lineWidth=parseInt(jsonData[obj][prop][prop2]); break;
+                            }
+                        }
+                    }
+                    else if(prop=="colors")
+                    {
+                        for(var prop2 in jsonData[obj][prop])
+                        { 
+                            switch(prop2)
+                            {
+                                case 'lineColor' : 
+                                    lineColor = [];
+                                    for(var i=0; i<jsonData[obj][prop][prop2].length;i++)
+                                        lineColor.push(jsonData[obj][prop][prop2][i]); 
+                                    Scene.lineColor = lineColor ; break;
+                                case 'wallColor' : 
+                                     wallColor = [];
+                                    for(var i=0; i<jsonData[obj][prop][prop2].length;i++)
+                                         wallColor.push(jsonData[obj][prop][prop2][i]); 
+                                    Scene. wallColor =  wallColor ; break;
+                                case 'marksBottomColor' : 
+                                    marksBottomColor = [];
+                                    for(var i=0; i<jsonData[obj][prop][prop2].length;i++)
+                                        marksBottomColor.push(jsonData[obj][prop][prop2][i]); 
+                                    Scene.marksBottomColor = marksBottomColor ; break;
+                                case 'marksTopColor' : 
+                                    marksTopColor = [];
+                                    for(var i=0; i<jsonData[obj][prop][prop2].length;i++)
+                                        marksTopColor.push(jsonData[obj][prop][prop2][i]); 
+                                    Scene.marksTopColor = marksTopColor ; break;
+                                case 'twoColors' : 
+                                    twoColors = [];
+                                    for(var i=0; i<jsonData[obj][prop][prop2].length;i++)
+                                        twoColors.push(jsonData[obj][prop][prop2][i]); 
+                                    Scene.twoColors = twoColors ; break;
+                                case 'twoCol': twoCol=stringToBoolean(jsonData[obj][prop][prop2]); 
+                                     Scene.twoCol = twoCol ;break;
+                                case 'diffColors' : 
+                                    diffColors = [];
+                                    for(var i=0; i<jsonData[obj][prop][prop2].length;i++)
+                                        diffColors.push(jsonData[obj][prop][prop2][i]); 
+                                    Scene.diffColors = diffColors ; break;
+                                case 'diffCol': diffCol=stringToBoolean(jsonData[obj][prop][prop2]); 
+                                     Scene.diffCol = diffCol ;break;
+                                case 'colors' : 
+                                    colors = [];
+                                    for(var i=0; i<jsonData[obj][prop][prop2].length;i++)
+                                        colors.push(jsonData[obj][prop][prop2][i]); 
+                                    Scene.colors = colors ; break;
+                                    
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    inChartsStart(canvas);
+};
+}( jQuery ));
+
+//  <editor-fold defaultstate="collapsed" desc="stringToBoolean">
+function stringToBoolean(string)
+{
+    switch(string.toLowerCase())
+    {
+        case "true":  return true;
+        case "false":  return false;
+    }
 }
 //  </editor-fold>
 
@@ -62,15 +253,12 @@ function setDefault()
      * @type Array
      * @desc Set default data for chart.
      */
-    var dataArray = [[5],[8],[10],[12],[15],[21],[18],[7],[12],[15]];
+    var dataArray = data;
     var d = [];
     d.push(dataArray);
-    Scene.diffCol = true;
     return d;
 }
 //  </editor-fold>
-
-
 
 //  <editor-fold defaultstate="collapsed" desc="run">
 function run()

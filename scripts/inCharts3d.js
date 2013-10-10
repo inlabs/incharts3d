@@ -1,3 +1,14 @@
+/******************************************************************************
+Name:    incharts3d
+Author:  Inlabs sp. z o.o. (Maciej Pleśnar, Ewelina Bendlin, Kamil Daszkowski)
+Version: 1.1 (October 2013)
+Support: http://incharts3d.com
+
+Licence:
+incharts3d is licensed under a Creative Commons Attribution-NonCommercial 3.0
+License (http://creativecommons.org/licenses/by-nc/3.0/).
+Noncommercial. You may not use this work for commercial purposes.
+******************************************************************************/
 function Application()
 {
     //  <editor-fold defaultstate="collapsed" desc="variables">    
@@ -6,43 +17,43 @@ function Application()
      * @type {Boolean}
      * @desc Switch on/off all walls.
      */
-    this.ShowWall        = true;
+    this.ShowWall        =  ShowWall;
     /** 
      * @member ShowWallBack
      * @type {Boolean}
      * @desc Switch on/off left and back walls.
      */
-    this.ShowWallBack    = true;
+    this.ShowWallBack    = ShowWallBack ;
     /** 
      * @member ShowLine
      * @type {Boolean}
      * @desc Switch on/off lines on walls.
      */
-    this.ShowLine        = true;
+    this.ShowLine        = ShowLine;
     /** 
      * @member ShowTextY 
      * @type {Boolean}
      * @desc Switch on/off text on y-axis.
      */
-    this.ShowTextY       = true;
+    this.ShowTextY       = ShowTextY;
     /** 
      * @member ShowTextXZ 
      * @type {Boolean}
      * @desc Switch on/off text on x-axis and z-axis.
      */
-    this.ShowTextXZ      = false;
+    this.ShowTextXZ      = ShowTextXZ;
     /** 
      * @member backgroundColor
      * @type {Array}
      * @desc Change background color of canvas.
      */
-    this.backgroundColor = [0.9019607843137255, 0.9019607843137255, 0.9019607843137255, 1.0];
+    this.backgroundColor = backgroundColor;
     /** 
      * @member drawTex
      * @type {Boolean}
      * @desc Switch on/off texturing.
      */
-    this.drawTex = false;
+    this.drawTex = drawTex;
     this.floorStep = 0;
     //  </editor-fold>
 }
@@ -117,7 +128,7 @@ Application.prototype.loadTexts = function()
 //  </editor-fold>
 
 //  <editor-fold defaultstate="collapsed" desc="configure">
-Application.prototype.configure = function()
+Application.prototype.configure = function(canvas)
 {
     gl.clearColor(this.backgroundColor[0], this.backgroundColor[1], this.backgroundColor[2], this.backgroundColor[3]);
     gl.clearDepth(1.0);
@@ -228,7 +239,6 @@ Application.prototype.drawScene= function()
         
         gl.enableVertexAttribArray(shaderProgram.aVertexPosition);
         gl.enableVertexAttribArray(shaderProgram.aVertexNormal);
-        gl.disableVertexAttribArray(shaderProgram.aVertexColor);
         gl.disableVertexAttribArray(shaderProgram.aVertexTextureCoords);
         //  </editor-fold>
          
@@ -280,18 +290,19 @@ Application.prototype.drawScene= function()
             if(this.ShowTextXZ)
             {
                 //przesunięcie napisu "podsumowanie"
-                if(numTextX==0)
-                {
-                    if(chart.showSum)
-                        mat4.translate(transforms.mvMatrix, [ 7+posX+translateX, (-4-camera.elevation/8)*TextsX[numTextX].bottom-translateY, 15]); 
-                    else
-                    {
-                        mat4.translate(transforms.mvMatrix, [7+translateX, -10-translateY, -15]); 
-                        gl.uniform1f(shaderProgram.uAlpha, 0.0);
-                    }
-                }
-                else
-                    mat4.translate(transforms.mvMatrix, [ser_max.posX[numTextX-1]+2+posX+translateX, (-4-camera.elevation/8)*TextsX[numTextX].bottom-translateY, 15]);
+//                if(numTextX==0)
+//                {
+//                    if(chart.showSum)
+//                        mat4.translate(transforms.mvMatrix, [ 7+posX+translateX, (-4-camera.elevation/8)*TextsX[numTextX].bottom-translateY, 15]); 
+//                    else
+//                    {
+//                        mat4.translate(transforms.mvMatrix, [7+translateX, -10-translateY, -15]); 
+//                        gl.uniform1f(shaderProgram.uAlpha, 0.0);
+//                    }
+//                }
+//                else
+                        //mat4.translate(transforms.mvMatrix, [ser_max.posX[numTextX-1]+2+posX+translateX, (-4-camera.elevation/8)*TextsX[numTextX].bottom-translateY, 15]);
+                    mat4.translate(transforms.mvMatrix, [ser_max.posX[numTextX]+2+posX+translateX, (-4-camera.elevation/8)*TextsX[numTextX].bottom-translateY, 15]);
                 
                 mat4.rotateX(transforms.mvMatrix, camera.elevation * Math.PI/180);
                 mat4.rotateY(transforms.mvMatrix, camera.azimuth * Math.PI/180);
@@ -449,10 +460,10 @@ Application.prototype.drawScene= function()
 
         //  <editor-fold defaultstate="collapsed" desc="enable vertex attribute">
         gl.enableVertexAttribArray(shaderProgram.vertexPositionAttribute);
-        gl.bindBuffer(gl.ARRAY_BUFFER, object.vbo);
+        gl.bindBuffer(gl.ARRAY_BUFFER, object.vbo); 
         gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, 3, gl.FLOAT, false, 0, 0);
          //  </editor-fold>
-         
+
         //  <editor-fold defaultstate="collapsed" desc="set texture buffer">
         if (object.texture_coords)
         {

@@ -1,7 +1,6 @@
 var vs = "\
 attribute vec3 aVertexPosition;\
 attribute vec3 aVertexNormal;\
-attribute vec4 aVertexColor;\
 attribute vec2 aTextureCoord;\
 \
 uniform mat4 uMVMatrix;\
@@ -26,10 +25,7 @@ void main(void)\
     vTextureCoord = vec2(0.0);\
     if (uWireframe)\
     {\
-        if (uPerVertexColor)\
-            vFinalColor = aVertexColor;\
-        else\
-            vFinalColor = uMaterialDiffuse;\
+        vFinalColor = uMaterialDiffuse;\
     }\
     if(uUseTextures)\
         vTextureCoord = aTextureCoord;\

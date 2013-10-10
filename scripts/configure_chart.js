@@ -1,3 +1,14 @@
+/******************************************************************************
+Name:    incharts3d
+Author:  Inlabs sp. z o.o. (Maciej Pleśnar, Ewelina Bendlin, Kamil Daszkowski)
+Version: 1.1 (October 2013)
+Support: http://incharts3d.com
+
+Licence:
+incharts3d is licensed under a Creative Commons Attribution-NonCommercial 3.0
+License (http://creativecommons.org/licenses/by-nc/3.0/).
+Noncommercial. You may not use this work for commercial purposes.
+******************************************************************************/
 function Chart(d)
 {
     //  <editor-fold defaultstate="collapsed" desc="variables">
@@ -14,19 +25,19 @@ function Chart(d)
      * @type String
      * @desc Set path to image for columns.
      */
-    this.texture  = "images/texture1.png";
+    this.texture  = texturePath;
     /**
      * @member legendX
      * @type {Array}
      * @desc Set descriptions on x-axis.
      */
-    this.legendX = [];
+    this.legendX = legendX;
     /**
      * @member legendZ
      * @type {Array}
      * @desc Set descriptions on z-axis.
      */
-    this.legendZ = [];
+    this.legendZ = legendZ;
     //  </editor-fold>
 }
 
@@ -596,6 +607,7 @@ Chart.prototype.changeShape = function(number)
     {
         series[i].shape = number;
         Scene.removeShapes(i);
+        
         for(var j=0; j< series[i].data.length; j++)
         {
             if(series[i].sumSeries)

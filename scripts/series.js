@@ -1,3 +1,14 @@
+/******************************************************************************
+Name:    incharts3d
+Author:  Inlabs sp. z o.o. (Maciej Pleśnar, Ewelina Bendlin, Kamil Daszkowski)
+Version: 1.1 (October 2013)
+Support: http://incharts3d.com
+
+Licence:
+incharts3d is licensed under a Creative Commons Attribution-NonCommercial 3.0
+License (http://creativecommons.org/licenses/by-nc/3.0/).
+Noncommercial. You may not use this work for commercial purposes.
+******************************************************************************/
 function Series()
 {  
     // <editor-fold defaultstate="collapsed" desc="variables">
@@ -6,25 +17,25 @@ function Series()
      * @type Number
      * @desc Change animation speed.
      */
-    this.speed     = 15;
+    this.speed     = speed;
     /**
      * @member shape
      * @type Number
      * @desc Change model shape (0 - cylinder, 1 - cube, 2 - cone).
      */
-    this.shape     = 0;
+    this.shape     = shape;
     /**
      * @member showMarks
      * @type Boolean
      * @desc Switch on/off labels.
      */
-    this.showMarks = false;
+    this.showMarks = showMarks;
     /**
      * @member anim
      * @type Number
      * @desc Change type of animation (0 - opacity, 1 - slideUp).
      */
-    this.anim      = 1;
+    this.anim      = anim;
     
     
     this.finishAnim = false;
