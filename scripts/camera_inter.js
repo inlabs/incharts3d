@@ -38,7 +38,7 @@ CameraInter.prototype.setPicker = function(p)
 CameraInter.prototype.get2DCoords = function(ev)
 {
     var x, y, top = 0, left = 0, obj = this.canvas;
-
+    
     this.picker.offX =obj.offsetLeft;
     this.picker.offY =obj.offsetTop;
     
@@ -51,12 +51,14 @@ CameraInter.prototype.get2DCoords = function(ev)
     
     left += window.pageXOffset;
     top  -= window.pageYOffset;
-
+ 
+ 
     x = ev.clientX - left;
     y = c_height - (ev.clientY - top);
-
+    
     return {x:x, y:y};
 };
+
 //  </editor-fold>
 
 //  <editor-fold defaultstate="collapsed" desc="onMouseUp">
@@ -86,7 +88,6 @@ CameraInter.prototype.onMouseMove = function(ev)
     this.x = ev.clientX;
     this.y = ev.clientY;
 
-  //  if(this.x<canvas.width && this.y<canvas.height)   
     {
         if (this.picker == null) return;
 
@@ -142,38 +143,53 @@ CameraInter.prototype.onKeyDown = function(ev)
 //  <editor-fold defaultstate="collapsed" desc="mousewheel">
 CameraInter.prototype.mousewheel = function(event)
 {
-    event.preventDefault();
-    event.stopPropagation();
-    var delta = 0;
+    var top = 0, left = 0, obj = this.canvas;
+    
+    while (obj)
+    {
+        top += obj.offsetTop;
+        left += obj.offsetLeft;
+        obj = obj.offsetParent;
+    }
+    
+    left += window.pageXOffset;
+    top  -= window.pageYOffset;
+    
+    if(event.clientX>left && event.clientX<left+c_width && event.clientY>top && event.clientY<top+c_height)
+    {
+        event.preventDefault();
+        event.stopPropagation();
+        var delta = 0;
 
-    if (/Firefox[\/\s](\d+\.\d+)/.test(navigator.userAgent))
-    {
-         if(event.detail) 
-            delta = - event.detail / 10;
-    }
-    else
-    {
-         if(event.wheelDelta)  // WebKit / Opera / Explorer 9
-            delta = event.wheelDelta / 250;
-    }
-
-    //  <editor-fold defaultstate="collapsed" desc="set new Z position">
-    var pos;
-    if(this.camera.z <= 110 + ( 1 / delta ) * 0.8)
-    {
-        pos = [this.camera.x, this.camera.y, this.camera.z - ( 1 / delta ) * 0.8];
-        this.camera.z -= ( 1 / delta ) * 0.8;
-        this.camera.setPosition(pos);
-    }
-    else
-    {
-        if(this.camera.z<108)
+        if (/Firefox[\/\s](\d+\.\d+)/.test(navigator.userAgent))
         {
-            pos = [this.camera.x, this.camera.y, this.camera.z+1];
-            this.camera.z += 1;
+             if(event.detail) 
+                delta = - event.detail / 10;
         }
+        else
+        {
+             if(event.wheelDelta)  // WebKit / Opera / Explorer 9
+                delta = event.wheelDelta / 250;
+        }
+
+        //  <editor-fold defaultstate="collapsed" desc="set new Z position">
+        var pos;
+        if(this.camera.z <= 110 + ( 1 / delta ) * 0.8 && this.camera.z >20+( 1 / delta ) * 0.8)
+        {
+            pos = [this.camera.x, this.camera.y, this.camera.z - ( 1 / delta ) * 0.8];
+            this.camera.z -= ( 1 / delta ) * 0.8;
+            this.camera.setPosition(pos);
+        }
+        else
+        {
+            if(this.camera.z <108 +( 1 / delta ) * 0.8)
+            {
+                pos = [this.camera.x, this.camera.y, this.camera.z+( 1 / delta ) * 0.8];
+                this.camera.z += ( 1 / delta ) * 0.8;
+            }
+        }
+        //  </editor-fold>
     }
-    //  </editor-fold>
 };
 //  </editor-fold>
 
@@ -228,9 +244,7 @@ CameraInter.prototype.rotate = function(dx, dy)
 };
 //  </editor-fold>
 
-//  <editor-fold defaultstate="collapsed" desc="hide">
 function hide(obj) {
     var win = document.getElementById(obj);
     win.style.display = 'none';
 }
-//  </editor-fold>

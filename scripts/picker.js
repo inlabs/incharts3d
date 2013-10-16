@@ -33,8 +33,8 @@ function Picker(canvas)
 //  <editor-fold defaultstate="collapsed" desc="update">
 Picker.prototype.update = function(){
 
-    var width  = c_width;
-    var height = c_height;
+    var width  = this.canvas.width;
+    var height = this.canvas.height;
    
     gl.bindTexture(gl.TEXTURE_2D, this.texture);
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, width, height, 0, gl.RGBA, gl.UNSIGNED_BYTE, null);
@@ -47,8 +47,8 @@ Picker.prototype.update = function(){
 //  <editor-fold defaultstate="collapsed" desc="configure">
 Picker.prototype.configure = function(){
 
-    var width  = c_width;
-    var height = c_height;
+    var width  = this.canvas.width;
+    var height = this.canvas.height;
 
     this.texture = gl.createTexture();
     gl.bindTexture(gl.TEXTURE_2D, this.texture);
@@ -96,6 +96,7 @@ Picker.prototype.find = function(coords)
     
     //  <editor-fold defaultstate="collapsed" desc="find new object">
     var color = [readout[0], readout[1], readout[2], 1.0];
+    if(focus)
     if(this.color[0] != color[0] || this.color[1] != color[1] || this.color[2] != color[2])
     {
         var found = false;
@@ -182,7 +183,7 @@ Picker.prototype.getSeries = function(alias)
             || this.color[1] == series[series_number].pickerColor[i][1]
             || this.color[2] == series[series_number].pickerColor[i][2])
         {
-            this.setMessage(series_number, shapeNumber, i);
+            this.setMessage(series_number, shapeNumber,i);
             this.color[0] += 1;
         }
     }
@@ -207,12 +208,8 @@ Picker.prototype.setMessage = function(series_number,index,numberX)
         num_ser  = "";
         num_ser += series[series_number].number_series+1;
     }
-    
-    var viewportOffset = this.canvas.getBoundingClientRect();
-    var leftOffset = viewportOffset.left;
-    var topOffset = viewportOffset.top;
-    
-   this.showLegend=false;
+        
+    this.showLegend=false;
     if(!this.showLegend) {
         var legendDiv = document.getElementById('legend');
         
@@ -230,12 +227,10 @@ Picker.prototype.setMessage = function(series_number,index,numberX)
             "fontFamily": "Open Sans", 
             "fontSize": "x-small", 
             "color": "#000",
-            "left": mouseX + this.offX + leftOffset + "px", 
-            "bottom": mouseY - this.offY + topOffset/2 + "px",
             "display": "block"
         };
         
-        for(var i in css){
+        for(i in css){
             legendDiv.style[i] = css[i];
         }
     }
@@ -288,4 +283,24 @@ Picker.prototype.processHits = function(hits)
     }
     app.render();
 };
+//  </editor-fold>
+
+//  <editor-fold defaultstate="collapsed" desc="get mouse coords">
+document.addEventListener('mousemove', onMouseMove, false);
+
+function onMouseMove(e) {
+    var x = e.pageX + 20;   
+    var y = e.pageY + 20;
+        
+    var legendDiv = document.getElementById('legend');
+    
+    css = {
+        "left": x + "px", 
+        "top": y + "px"
+    };
+
+    for(i in css){
+        legendDiv.style[i] = css[i];
+    }
+}
 //  </editor-fold>
